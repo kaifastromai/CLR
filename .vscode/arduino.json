@@ -1,0 +1,4 @@
+{
+    "sketch": "mainble.ino",
+    "board": "arduino:mbed:nano33ble"
+}
