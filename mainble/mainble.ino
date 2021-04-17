@@ -5,15 +5,15 @@
 #include <Arduino_LSM9DS1.h>
 // Modified from Science Kit
 const int VERS = 0x1;
-#define ARD_UUID(val) ("5a5a0002-" val "-467a-9538-01f0652c74e8")
+#define ARD_UUID(val) ("0000" val "-0000-1000-8000-00805F9B34FB")
 
-BLEService service(ARD_UUID("0000"));
-BLEUnsignedIntCharacteristic versionCharacteristic(ARD_UUID("0000"), BLERead);
-BLECharacteristic accelCharacteristic(ARD_UUID("0001"), BLENotify,
+BLEService service(ARD_UUID("1000"));
+BLEUnsignedIntCharacteristic versionCharacteristic(ARD_UUID("2000"), BLERead);
+BLECharacteristic accelCharacteristic(ARD_UUID("0001"), BLENotify | BLERead,
                                       3 * sizeof(float));
-BLECharacteristic gyroCharacteristic(ARD_UUID("0011"), BLENotify,
-                                     3 * sizeof(float));
-BLEFloatCharacteristic temperatureCharacteristic("2A6E", BLENotify);
+BLECharacteristic gyroCharacteristic(ARD_UUID("0011"), BLENotify | BLERead,
+                                     4 * sizeof(float));
+BLEFloatCharacteristic temperatureCharacteristic("2A6E", BLENotify | BLERead);
 // Call whenever there is an error
 void blinkLoop() {
   while (1) {
@@ -81,11 +81,13 @@ void loop() {
     Serial.println(central.address());
   }
   while (central.connected()) {
+    Serial.println("Central is connected. Updating characteristics");
     updateSubscribedCharacteristics();
     delay(200);
   }
   digitalWrite(LED_BUILTIN, LOW);
   Serial.println("Connection terminated.");
+  delay(1000);
 }
 
 void updateSubscribedCharacteristics() {
@@ -95,16 +97,17 @@ void updateSubscribedCharacteristics() {
         IMU.readAcceleration(accel[0], accel[1], accel[2])) {
       accelCharacteristic.writeValue((byte*)accel, sizeof(accel));
     }
-    if (gyroCharacteristic.subscribed()) {
-      float gyro[3];
-      if (IMU.gyroscopeAvailable() &&
-          IMU.readGyroscope(gyro[0], gyro[1], gyro[2])) {
-        gyroCharacteristic.writeValue((byte*)gyro, sizeof(gyro));
-      }
+  }
+  if (gyroCharacteristic.subscribed()) {
+    float gyro[4];
+    gyro[3] = 3.1415;
+    if (IMU.gyroscopeAvailable() &&
+        IMU.readGyroscope(gyro[0], gyro[1], gyro[2])) {
+      gyroCharacteristic.writeValue((byte*)gyro, sizeof(gyro));
     }
-    if (temperatureCharacteristic.subscribed()) {
-      float temp = HTS.readTemperature();
-      temperatureCharacteristic.writeValue(temp);
-    }
+  }
+  if (temperatureCharacteristic.subscribed()) {
+    float temp = HTS.readTemperature();
+    temperatureCharacteristic.writeValue(temp);
   }
 }

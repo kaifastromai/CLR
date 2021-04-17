@@ -1,4 +1,5 @@
 {
     "sketch": "mainble.ino",
-    "board": "arduino:mbed:nano33ble"
+    "board": "arduino:mbed:nano33ble",
+    "port": "/dev/ttyACM0"
 }

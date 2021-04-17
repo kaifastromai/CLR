@@ -1,29 +1,17 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "Linux",
             "includePath": [
-                "C:\\Users\\kaifas\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\**",
-                "C:\\Users\\kaifas\\Documents\\Arduino\\libraries\\**",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\**",
-                "C:\\Users\\kaifas\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed\\1.3.2\\**",
                 "${workspaceFolder}/**",
-                "${vcpkgRoot}/x64-windows/include"
+                "/home/kaifas/Arduino/libraries/**",
+                "${vcpkgRoot}/x64-linux/include"
             ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE",
-                "USBCON"
-            ],
-            "windowsSdkVersion": "10.0.17763.0",
-            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.28.29333/bin/Hostx64/x64/cl.exe",
-            "cStandard": "c17",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "windows-msvc-x64",
-            "forcedInclude": [
-                "C:\\Users\\kaifas\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed\\1.3.2\\cores\\arduino\\Arduino.h"
-            ]
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "linux-gcc-x64"
         }
     ],
     "version": 4
